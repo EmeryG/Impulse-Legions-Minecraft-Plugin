@@ -7,8 +7,7 @@ import org.bukkit.entity.Player;
  */
 public class ProfessionMember {
 
-    @Setter
-    @Getter
+    @Setter @Getter
     static ProfessionClasses profession;
 
     public ProfessionMember(ProfessionClasses prof) {
