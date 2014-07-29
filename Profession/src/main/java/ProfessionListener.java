@@ -7,6 +7,7 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.material.Door;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
@@ -34,13 +35,19 @@ public class ProfessionListener implements Listener {
                 if (ProfessionMember.getProfession(p).equals(ProfessionClasses.THEIF)) {
                     if (event.getClickedBlock().getType() == Material.WOOD_DOOR
                             && event.getClickedBlock().getType() == Material.TRAP_DOOR) {
+                        Door d = (Door) event.getClickedBlock().getState().getData();
+                        if (!d.isOpen()) {
+                            d.setOpen(true);
+                        }
                         event.setCancelled(true);
-                        event.getClickedBlock().setType(Material.WOODEN_DOOR);
                     } else if (event.getClickedBlock().getType() == Material.IRON_DOOR) {
                         Random r = new Random();
                         if (r.nextInt(9) == 3) {
+                            Door d = (Door) event.getClickedBlock().getState().getData();
+                            if (!d.isOpen()) {
+                                d.setOpen(true);
+                            }
                             event.setCancelled(true);
-                            event.getClickedBlock().setType(Material.IRON_DOOR_BLOCK);
                         }
                     }
                 }
