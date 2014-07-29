@@ -1,3 +1,5 @@
+import lombok.Getter;
+import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
 /**
@@ -5,11 +7,14 @@ import org.bukkit.plugin.java.JavaPlugin;
  */
 public class ProfessionMain extends JavaPlugin {
 
-    public void onDisable() {
-
-    }
+    @Getter
+    static ProfessionMain main;
 
     public void onEnable() {
 
+        ProfessionListener pl = new ProfessionListener();
+        Bukkit.getServer().getPluginManager().registerEvents(pl, this);
+
+        main = this;
     }
 }
