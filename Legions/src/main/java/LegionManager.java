@@ -11,6 +11,7 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -19,6 +20,7 @@ import java.util.List;
 public class LegionManager implements Listener, CommandExecutor {
     ArrayList<Legion> legions = new ArrayList<Legion>();
     static ArrayList<Chunk> claimedChunks = new ArrayList<Chunk>();
+    static HashMap<String, String> PendingInvites = new HashMap<String, String>();
     FileConfiguration main;
 
     public LegionManager() {
@@ -46,6 +48,21 @@ public class LegionManager implements Listener, CommandExecutor {
                     }
                     break;
                 case "accept": case "a":
+                    if(PendingInvites.containsKey(args[1])) {
+                        if(PendingInvites.get(args[1]).equalsIgnoreCase(p.getName())) {
+                            Legion l = findLegion(p);
+                            if(l == null) {
+                                PendingInvites.remove(args[1]);
+                                p.sendMessage(Config.getMessage("NoInvite"));
+                            } else {
+                                l.members.add(new LegionMember(Rank.NORMAL, p.getName()));
+                            }
+                        } else {
+                            p.sendMessage(Config.getMessage("NoInvite"));
+                        }
+                    } else {
+                        p.sendMessage(Config.getMessage("NoInvite"));
+                    }
                     break;
                 default:
                     Legion legion = findLegion(p);

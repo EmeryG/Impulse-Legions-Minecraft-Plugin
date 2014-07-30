@@ -1,9 +1,12 @@
 import lombok.Getter;
 import lombok.Setter;
+import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 
 /**
@@ -37,65 +40,106 @@ public class Legion implements Listener {
             case "invite":
             case "inv":
                 if (getMember(name).getRank() != Rank.NORMAL) {
+                    if(LegionManager.PendingInvites.containsKey(player.getName())) {
+                        LegionManager.PendingInvites.remove(player.getName());
+                        LegionManager.PendingInvites.put(player.getName(), args[1]);
 
+                        try {
+                            Bukkit.getPlayer(args[1]).sendMessage(Config.getMessage("InviteFormat", name, player.getName()));
+                        } catch(NullPointerException e) {
+                            player.sendMessage(Config.getMessage("PlayerNotOnline", args[1]));
+                            LegionManager.PendingInvites.remove(player.getName());
+                            return false;
+                        }
+                    }
                 } else {
-                    player.sendMessage(Config.getMessage("needhigherrank"));
+                    player.sendMessage(Config.getMessage("NeedHigherRank"));
+                    return false;
                 }
                 break;
             case "general":
-                if (getMember(name).getRank() == Rank.GENERAL) {
-
+                if (getMember(player.getName()).getRank() == Rank.GENERAL) {
+                    try {
+                        getMember(player.getName()).setRank(Rank.COMMANDER);
+                        getMember(args[1]).setRank(Rank.GENERAL);
+                        saveLegion();
+                        broadcastMessage(Config.getMessage("NewGeneral", args[1]));
+                    } catch(NullPointerException e) {
+                        player.sendMessage(Config.getMessage("NotInLegion", args[1]));
+                        return false;
+                    }
                 } else {
-                    player.sendMessage(Config.getMessage("needgeneral"));
+                    player.sendMessage(Config.getMessage("NeedGeneral"));
+                    return false;
                 }
                 break;
             case "commander":
                 if (getMember(name).getRank() == Rank.GENERAL) {
-
+                    try {
+                        if(getMember(args[1]).getRank() == Rank.COMMANDER) {
+                            getMember(args[1]).setRank(Rank.NORMAL);
+                            broadcastMessage(Config.getMessage("DemotedCommander", args[1]));
+                            saveLegion();
+                        } else {
+                            getMember(args[1]).setRank(Rank.COMMANDER);
+                            broadcastMessage(Config.getMessage("NewCommander", args[1]));
+                            saveLegion();
+                        }
+                    } catch(NullPointerException e) {
+                        player.sendMessage(Config.getMessage("NotInLegion", args[1]));
+                        return false;
+                    }
                 } else {
-                    player.sendMessage(Config.getMessage("needgeneral"));
+                    player.sendMessage(Config.getMessage("NeedGeneral"));
+                    return false;
                 }
                 break;
             case "claim":
                 if (getMember(name).getRank() != Rank.NORMAL) {
 
                 } else {
-                    player.sendMessage(Config.getMessage("needhigherrank"));
+                    player.sendMessage(Config.getMessage("NeedHigherRank"));
+                    return false;
                 }
                 break;
             case "unclaim":
                 if (getMember(name).getRank() != Rank.NORMAL) {
 
                 } else {
-                    player.sendMessage(Config.getMessage("needhigherrank"));
+                    player.sendMessage(Config.getMessage("NeedHigherRank"));
+                    return false;
                 }
                 break;
             case "attack":
                 if (getMember(name).getRank() != Rank.NORMAL) {
 
                 } else {
-                    player.sendMessage(Config.getMessage("needhigherrank"));
+                    player.sendMessage(Config.getMessage("NeedHigherRank"));
+                    return false;
                 }
                 break;
             case "ally":
                 if (getMember(name).getRank() != Rank.NORMAL) {
 
                 } else {
-                    player.sendMessage(Config.getMessage("needhigherrank"));
+                    player.sendMessage(Config.getMessage("NeedHigherRank"));
+                    return false;
                 }
                 break;
-            case "neutal":
+            case "neutral":
                 if (getMember(name).getRank() != Rank.NORMAL) {
 
                 } else {
-                    player.sendMessage(Config.getMessage("needhigherrank"));
+                    player.sendMessage(Config.getMessage("NeedHigherRank"));
+                    return false;
                 }
                 break;
             case "enemy":
                 if (getMember(name).getRank() != Rank.NORMAL) {
 
                 } else {
-                    player.sendMessage(Config.getMessage("needhigherrank"));
+                    player.sendMessage(Config.getMessage("NeedHigherRank"));
+                    return false;
                 }
                 break;
             default:
@@ -105,6 +149,16 @@ public class Legion implements Listener {
         return true;
     }
 
+    public void broadcastMessage(String m) {
+        for (LegionMember lm : members) {
+            try {
+                Bukkit.getPlayer(lm.getName()).sendMessage(m);
+            } catch (NullPointerException e) {
+
+            }
+        }
+    }
+
     public LegionMember getMember(String name) {
         for (LegionMember lm : members) {
             if (lm.getName().equalsIgnoreCase(name)) {
@@ -112,5 +166,31 @@ public class Legion implements Listener {
             }
         }
         return null;
+    }
+
+    public void saveLegion() {
+        ArrayList<String> players = new ArrayList<String>();
+
+        for(LegionMember member : members) {
+            players.add(member.getName());
+        }
+        config.set("players", members);
+
+        for(LegionMember member : members) {
+            config.set("players." + member.getName(), member.getRank().getValue());
+        }
+
+        config.set("level", level);
+        config.set("xp", xp);
+
+        config.set("allies", allies);
+        config.set("enemies", enemies);
+        try {
+            config.save(new File(LegionsMain.getMain().getDataFolder() + "/legions/" + name.toLowerCase() + ".yml"));
+        } catch (IOException e) {
+            LegionsMain.getMain().getLogger().info("IOError when saving config: " + e.getMessage());
+        }
+
+        config = Config.getConfig("/legions/" + name.toLowerCase() + ".yml");
     }
 }

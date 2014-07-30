@@ -27,6 +27,17 @@ public class Config {
         return LegionsMain.getMain().getConfig().getString(path).replace("&", "§");
     }
 
+    public static String getMessage(String path, String var) {
+        String message = LegionsMain.getMain().getConfig().getString(path).replace("&", "§");
+        return message.replace("%v", var);
+    }
+
+    public static String getMessage(String path, String var, String var2) {
+        String message = LegionsMain.getMain().getConfig().getString(path).replace("&", "§");
+        message = message.replace("%v", var);
+        return message.replace("%v2", var2);
+    }
+
     public static Legion createLegion(Player p, String legionName) {
         ArrayList<LegionMember> members = new ArrayList<LegionMember>();
         members.add(new LegionMember(Rank.GENERAL, p.getName()));
