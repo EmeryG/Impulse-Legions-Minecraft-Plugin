@@ -4,7 +4,7 @@ import org.bukkit.ChatColor;
 /**
  * Created by WaterNode on 7/28/2014.
  */
-public class Chunk {
+public class LegionChunk {
     @Getter
     int x;
 
@@ -14,9 +14,10 @@ public class Chunk {
     @Getter
     String owner;
 
-    public Chunk(int xcoord, int zcoord) {
+    public LegionChunk(int xcoord, int zcoord, String o) {
         x = xcoord;
         z = zcoord;
+        owner = o;
     }
 
     public String returnColor(Legion l) {

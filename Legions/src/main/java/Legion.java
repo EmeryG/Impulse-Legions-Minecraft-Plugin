@@ -96,7 +96,11 @@ public class Legion implements Listener {
                 break;
             case "claim":
                 if (getMember(name).getRank() != Rank.NORMAL) {
-
+                    if(LegionManager.claimedAmount(name) < members.size()*2) {
+                        // Claim
+                    } else {
+                        player.sendMessage(Config.getMessage("NotEnoughSpace"));
+                    }
                 } else {
                     player.sendMessage(Config.getMessage("NeedHigherRank"));
                     return false;
@@ -166,6 +170,12 @@ public class Legion implements Listener {
             }
         }
         return null;
+    }
+
+    public void addMember(String name) {
+        members.add(new LegionMember(Rank.NORMAL, name));
+        broadcastMessage(Config.getMessage("NewMember", name));
+        saveLegion();
     }
 
     public void saveLegion() {

@@ -40,7 +40,7 @@ public class Lib {
                  x++) {
 
 
-                Chunk c = LegionManager.getChunk(x, z);
+                LegionChunk c = LegionManager.getChunk(x, z);
                 if (x == p.getLocation().getChunk().getX() && z == p.getLocation().getChunk().getZ()) {
                     double rotation = (p.getLocation().getYaw() - 90) % 360;
 
