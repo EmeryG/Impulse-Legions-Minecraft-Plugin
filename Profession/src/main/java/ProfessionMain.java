@@ -1,6 +1,5 @@
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
-import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -38,6 +37,10 @@ public class ProfessionMain extends JavaPlugin {
         inv.setItem(5, make(Material.NETHER_STAR, 1, 0, "BLOODLUST", Arrays.asList("")));
     }
 
+    public void onDisable() {
+
+    }
+
     public static ItemStack make(Material material, int amount,
                                  int shrt, String displayName, List<String> lore) {
         ItemStack item = new ItemStack(material, amount, (short) shrt);
@@ -48,6 +51,11 @@ public class ProfessionMain extends JavaPlugin {
         return item;
     }
 
-    public static void addProfession(Player player, ProfessionClasses job) {
+    public static void addProfession(UUID player, ProfessionClasses job) {
+        jobs.put(player, job);
+    }
+
+    public static void removeProfession(UUID player, ProfessionClasses job) {
+        jobs.remove(player, job);
     }
 }
