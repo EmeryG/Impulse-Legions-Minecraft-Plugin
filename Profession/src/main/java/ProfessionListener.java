@@ -124,15 +124,35 @@ public class ProfessionListener implements Listener {
             if (event.getInventory().getName().equals(ProfessionMain.plugin.getConfig().getString("ProfessionInvName"))) {
                 if (clicked.getType() == Material.NETHER_STAR) {
                     if (clicked.getItemMeta().getDisplayName() == "THEIF") {
-
+                        if (ProfessionMember.getProfession(p).equals(null)) {
+                            ProfessionMain.removeProfession(p.getUniqueId(), ProfessionClasses.THEIF);
+                        } else {
+                            ProfessionMain.addProfession(p.getUniqueId(), ProfessionClasses.THEIF);
+                        }
                     } else if (clicked.getItemMeta().getDisplayName() == "SCOUT") {
-
+                        if (ProfessionMember.getProfession(p).equals(null)) {
+                            ProfessionMain.removeProfession(p.getUniqueId(), ProfessionClasses.SCOUT);
+                        } else {
+                            ProfessionMain.addProfession(p.getUniqueId(), ProfessionClasses.SCOUT);
+                        }
                     } else if (clicked.getItemMeta().getDisplayName() == "HEAVY") {
-
+                        if (ProfessionMember.getProfession(p).equals(null)) {
+                            ProfessionMain.removeProfession(p.getUniqueId(), ProfessionClasses.HEAVY);
+                        } else {
+                            ProfessionMain.addProfession(p.getUniqueId(), ProfessionClasses.HEAVY);
+                        }
                     } else if (clicked.getItemMeta().getDisplayName() == "COWARD") {
-
+                        if (ProfessionMember.getProfession(p).equals(null)) {
+                            ProfessionMain.removeProfession(p.getUniqueId(), ProfessionClasses.COWARD);
+                        } else {
+                            ProfessionMain.addProfession(p.getUniqueId(), ProfessionClasses.COWARD);
+                        }
                     } else if (clicked.getItemMeta().getDisplayName() == "BLOODLUST") {
-
+                        if (ProfessionMember.getProfession(p).equals(null)) {
+                            ProfessionMain.removeProfession(p.getUniqueId(), ProfessionClasses.BLOODLUST);
+                        } else {
+                            ProfessionMain.addProfession(p.getUniqueId(), ProfessionClasses.BLOODLUST);
+                        }
                     }
                 }
             }
