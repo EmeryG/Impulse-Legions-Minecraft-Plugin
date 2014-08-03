@@ -1,3 +1,5 @@
+package legions.legion;
+
 import lombok.Getter;
 import lombok.Setter;
 

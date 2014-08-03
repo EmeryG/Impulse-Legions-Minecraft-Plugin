@@ -1,4 +1,9 @@
-import org.bukkit.ChatColor;
+package legions.lib;
+
+import legions.LegionsMain;
+import legions.legion.Legion;
+import legions.legion.LegionMember;
+import legions.legion.Rank;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
@@ -38,6 +43,13 @@ public class Config {
         return message.replace("%v2", var2);
     }
 
+    public static String getMessage(String path, String var, String var2, String var3) {
+        String message = LegionsMain.getMain().getConfig().getString(path).replace("&", "§");
+        message = message.replace("%v", var);
+        message.replace("%v2", var2);
+        return message.replace("%v3", var3);
+    }
+
     public static Legion createLegion(Player p, String legionName) {
         ArrayList<LegionMember> members = new ArrayList<LegionMember>();
         members.add(new LegionMember(Rank.GENERAL, p.getName()));
@@ -68,7 +80,7 @@ public class Config {
                 config.save(LegionsMain.getMain().getDataFolder() + "/" + legionName.toLowerCase() + ".yml");
 
             } catch (IOException e) {
-                LegionsMain.getMain().getLogger().info("IOError while making a new Legion: " + e.getMessage());
+                LegionsMain.getMain().getLogger().info("IOError while making a new legions.legion.Legion: " + e.getMessage());
             }
         } else {
             p.sendMessage(getMessage("AlreadyCreated"));

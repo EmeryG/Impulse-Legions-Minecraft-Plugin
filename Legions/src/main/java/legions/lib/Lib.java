@@ -1,3 +1,9 @@
+package legions.lib;
+
+import legions.LegionsMain;
+import legions.chunks.LegionChunk;
+import legions.legion.Legion;
+import legions.legion.LegionMember;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
@@ -7,23 +13,23 @@ import org.bukkit.entity.Player;
 public class Lib {
 
     public static void giveLegionInfo(Player p, Legion infoLegion, Legion playersLegion) {
-        p.sendMessage(Config.getMessage("InfoFormat") + "Legion: " + stanceColor(playersLegion, infoLegion) + infoLegion.getName());
+        p.sendMessage(Config.getMessage("InfoFormat.Legion", stanceColor(playersLegion, infoLegion) + infoLegion.getName()));
 
-        p.sendMessage(Config.getMessage("InfoFormat") + "Level: " + infoLegion.getLevel());
+        p.sendMessage(Config.getMessage("InfoFormat.Level", "" + infoLegion.getLevel()));
 
-        p.sendMessage(Config.getMessage("InfoFormat") + "Players:");
-        for(LegionMember member : infoLegion.members) {
-            p.sendMessage(Config.getMessage("InfoFormat") + "  - " + member.getName());
+        p.sendMessage(Config.getMessage("InfoFormat.PlayersHeader"));
+        for(LegionMember member : infoLegion.getMembers()) {
+            p.sendMessage(Config.getMessage("InfoFormat.PlayersList", member.getName()));
         }
 
-        p.sendMessage(Config.getMessage("InfoFormat") + "Enemies:");
-        for(String enemy : infoLegion.enemies) {
-            p.sendMessage(Config.getMessage("InfoFormat") + "  - " + stanceColor(playersLegion, enemy) + enemy);
+        p.sendMessage(Config.getMessage("InfoFormat.EnemiesHeader"));
+        for(String enemy : infoLegion.getEnemies()) {
+            p.sendMessage(Config.getMessage("InfoFormat.EnemiesList", stanceColor(playersLegion, enemy) + enemy));
         }
 
-        p.sendMessage(Config.getMessage("InfoFormat") + "Allies:");
-        for(String ally : infoLegion.allies) {
-            p.sendMessage(Config.getMessage("InfoFormat") + "  - " + stanceColor(playersLegion, ally) + ally);
+        p.sendMessage(Config.getMessage("InfoFormat.AlliesHeader"));
+        for(String ally : infoLegion.getAllies()) {
+            p.sendMessage(Config.getMessage("InfoFormat.AlliesList", stanceColor(playersLegion, ally) + ally));
         }
     }
 
@@ -40,7 +46,7 @@ public class Lib {
                  x++) {
 
 
-                LegionChunk c = LegionManager.getChunk(x, z);
+                LegionChunk c = LegionsMain.getChunkManager().getChunk(x, z);
                 if (x == p.getLocation().getChunk().getX() && z == p.getLocation().getChunk().getZ()) {
                     double rotation = (p.getLocation().getYaw() - 90) % 360;
 
@@ -58,7 +64,7 @@ public class Lib {
                         row += ChatColor.LIGHT_PURPLE + ">";
                     }
                 } else if (c != null) {
-                    row += LegionManager.getChunk(x, z).returnColor(legion);
+                    row += c.returnColor(legion);
                 } else {
                     row += ChatColor.BLACK + "X";
                 }
@@ -72,9 +78,9 @@ public class Lib {
 
     public static String stanceColor(Legion one, Legion two) {
         try {
-            if (one.allies.contains(two.getName())) {
+            if (one.getAllies().contains(two.getName())) {
                 return ChatColor.GREEN + "O";
-            } else if (one.enemies.contains(two.getName())) {
+            } else if (one.getEnemies().contains(two.getName())) {
                 return ChatColor.RED + "O";
             } else {
                 return ChatColor.GRAY + "O";
@@ -86,9 +92,9 @@ public class Lib {
 
     public static String stanceColor(Legion one, String two) {
         try {
-            if (one.allies.contains(two)) {
+            if (one.getAllies().contains(two)) {
                 return ChatColor.GREEN + "";
-            } else if (one.enemies.contains(two)) {
+            } else if (one.getEnemies().contains(two)) {
                 return ChatColor.RED + "";
             } else {
                 return ChatColor.GRAY + "";

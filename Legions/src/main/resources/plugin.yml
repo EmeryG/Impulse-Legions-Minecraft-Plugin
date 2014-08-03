@@ -1,0 +1,91 @@
+# Color codes are supporting with &
+# Variables are used throughout, using %v and %v2
+#=======================
+#  <Command Errors>
+#=======================
+# Contains %v, which is the name of the player not online.
+PlayerNotOnline: &6%v is not online.
+
+# Contains no variables, actually.
+NeedHigherRank: &6You need a higher rank to execute this command.
+
+# Contains %v, which is the name of the player not in the legion.
+NotInLegion: &6%v is not in your legion.
+
+# Contains no variables, actually.
+NeedGeneral: &6You need the general to do that.
+
+# Contains no variables, actually.
+AlreadyClaimed: &6That chunk is already claimed.
+
+# Contains no variables, actually.
+NotEnoughSpace: &6You need more players in your legion to claim that.
+
+# Contains no variables, actually.
+NotYours: &6That chunk is not yours to unclaim.
+
+# Contains no variables, actually.
+FakeChunk: &6That chunk is not claimed by anyone.
+
+# Contains %v, which is the name of the nonexistent legion.
+FakeLegion: &6The legion, %v does not exist.
+
+# Contains %v, which is the name of the cmd that player entered in.
+CmdNotFound: &6The command you entered, %v, is nonexistent.
+
+# Contains no variables, actually.
+NoInvite: &6You do not have an invite currently.
+
+# Contains no variables, actually.
+InLegion: &6You are already currently in a legion.
+
+# Contains %v, which is the name of the player not in a legion.
+NotInALegion: &6%v is not in a legion.
+
+#=======================
+# <Legion Notifications>
+#=======================
+# Contains %v, the name of the Legion, and %v2, the player who gave the invitation.
+Invite: &6You have been invited by %v to join %v2.
+
+# Contains %v, the name of the new general.
+NewGeneral: &6%v is now general of the Legion!
+
+# Contains %v, the name of the demoted commander.
+DemotedCommander: &6%v is no longer a commander.
+
+# Contains %v, the name of the new commander.
+NewCommander: &6%v is now a commander.
+
+# Contains %v, the name of the one who claimed the chunk.
+ClaimedChunk: &6%v has claimed a chunk of land.
+
+# Contains %v, the name of the one who unclaimed the chunk.
+ChunkUnclaimed: &6%v has unclaimed a chunk of land.
+
+# Contains %v, the name of the legion who allied you.
+NewAllyStance: &6%v has set an ally stance to you.
+
+# Contains %v, the name of the legion who yours has set neutral to.
+SetNeutralStance: &6Your legion has set ally stance to %v.
+
+# Contains %v, the name of the legion who has set neutral to you.
+NewNeutralStance: &6%v has set a neutral stance to you.
+
+# Contains %v, the name of the legion who yours has enemied.
+SetEnemyStance: &6Your legion has set an enemy stance to %v.
+
+# Contains %v, the name of the legion who enemied you.
+NewEnemyStance: &6%v has set an enemy stance to you.
+
+# Contains %v, the name of the legion who yours has allied.
+SetAllyStance: &6Your legion has set ally stance to %v.
+
+# Contains %v, the name of the legion who owns the chunk.
+EnterLand: &6This chunk is claimed by %v.
+
+
+
+
+
+
